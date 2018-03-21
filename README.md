@@ -26,6 +26,15 @@ Your program need to be writen in functional style. Example:
 )
 ```
 
+```lisp
+(if (0 > 1) (
+    '0>1'
+  )(
+  '1<=0'
+  )
+)
+```
+
 Functions are now made:
 
 * `if`
@@ -40,3 +49,12 @@ Functions are now made:
 * `or`
 * `xor`
 * `log`
+
+Operators are now made:
+
+* <
+* >
+* +
+* -
+* \*
+* /
