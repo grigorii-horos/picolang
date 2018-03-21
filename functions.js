@@ -12,7 +12,7 @@ module.exports = {
   multiplication(x) {
     return y => x * y;
   },
-  divide(x) {
+  division(x) {
     return y => x / y;
   },
   sqrt(x) {

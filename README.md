@@ -25,3 +25,17 @@ Your program need to be writen in functional style. Example:
   )
 )
 ```
+
+Functions are now made:
+
+* `plus`
+* `minus`
+* `multiplication`
+* `division`
+* `sqrt`
+* `pow`
+* `not`
+* `and`
+* `or`
+* `xor`
+* `log`

@@ -47,7 +47,6 @@ const toAST = tokens => {
 };
 
 const AST = toAST(tokens);
-// _(AST);
 
 const execAST = AST => {
   if (!AST) {
