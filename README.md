@@ -28,6 +28,7 @@ Your program need to be writen in functional style. Example:
 
 Functions are now made:
 
+* `if`
 * `plus`
 * `minus`
 * `multiplication`

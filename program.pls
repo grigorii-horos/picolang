@@ -1,1 +1,1 @@
-(plus 2 3 )
+(if true 2 3 )

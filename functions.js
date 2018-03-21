@@ -32,5 +32,13 @@ module.exports = {
   },
   xor(x) {
     return y => x !== y;
+  },
+  if(x) {
+    return y => z => {
+      if (x) {
+        return y;
+      }
+      return z;
+    };
   }
 };
