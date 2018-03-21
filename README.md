@@ -52,9 +52,9 @@ Functions are now made:
 
 Operators are now made:
 
-* <
-* >
-* +
-* -
+* \<
+* \>
+* \+
+* \-
 * \*
 * /
