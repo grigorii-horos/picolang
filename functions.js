@@ -1,44 +1,22 @@
 module.exports = {
-  log(x) {
+  log: x => {
     console.log(x);
     return x;
   },
-  plus(x) {
-    return y => x + y;
-  },
-  minus(x) {
-    return y => x - y;
-  },
-  multiplication(x) {
-    return y => x * y;
-  },
-  division(x) {
-    return y => x / y;
-  },
-  sqrt(x) {
-    return Math.sqrt(x);
-  },
-  pow(x) {
-    return y => x ** y;
-  },
-  not(x) {
-    return !x;
-  },
-  and(x) {
-    return y => x && y;
-  },
-  or(x) {
-    return y => x || y;
-  },
-  xor(x) {
-    return y => x !== y;
-  },
-  if(x) {
-    return y => z => {
-      if (x) {
-        return y;
-      }
-      return z;
-    };
+  plus: x => y => x + y,
+  minus: x => y => x - y,
+  multiplication: x => y => x * y,
+  division: x => y => x / y,
+  sqrt: x => Math.sqrt(x),
+  pow: x => y => x ** y,
+  not: x => !x,
+  and: x => y => x && y,
+  or: x => y => x || y,
+  xor: x => y => x !== y,
+  if: x => y => z => {
+    if (x) {
+      return y;
+    }
+    return z;
   }
 };

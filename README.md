@@ -2,17 +2,24 @@
 
 Write your program in file `program.pls` and execute `node index.js`.
 
+##### Supports variable declaration
+
+```lisp
+foo = true
+bar = foo
+```
+
 Your program need to be writen in functional style. Example:
 
 ```lisp
-(plus 2 3)
+(log (plus 2 3))
 ```
 
 ```lisp
-(and
+(log (and
   true
   (xor false true)
-)
+))
 ```
 
 ```lisp
@@ -27,12 +34,13 @@ Your program need to be writen in functional style. Example:
 ```
 
 ```lisp
-(if (0 > 1) (
-    '0>1'
-  )(
-  '1<=0'
-  )
-)
+foo = 3
+(log (if (foo == 3)
+  ("foo = 3")
+  ("Error")
+))
+bar = (pow foo 3)
+(log bar)
 ```
 
 Functions are now made:
@@ -52,9 +60,10 @@ Functions are now made:
 
 Operators are now made:
 
-* \<
+* <
 * \>
 * \+
 * \-
 * \*
 * /
+* ==

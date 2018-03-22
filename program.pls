@@ -1,6 +1,7 @@
-(if (0 > 1) (
-    '0>1'
-  )(
-  '1<=0'
-  )
+(foo = 3)
+log (if (foo == 3)
+  ("foo = 3")
+  ("Error")
 )
+bar = pow foo 3
+log bar
