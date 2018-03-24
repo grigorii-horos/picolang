@@ -12,35 +12,21 @@ bar = foo
 Your program need to be writen in functional style. Example:
 
 ```lisp
-(log (plus 2 3))
-```
+(a = 1000)
 
-```lisp
-(log (and
-  true
-  (xor false true)
+(b = (if true
+  (a true)
+  (a false)
 ))
-```
 
-```lisp
-(log
-  (sqrt
-    (plus
-      21
-      (pow 10 2)
-    )
-  )
-)
-```
-
-```lisp
-foo = 3
-(log (if (foo == 3)
-  ("foo = 3")
-  ("Error")
+(c => (if true
+  (a true)
+  (a false)
 ))
-bar = (pow foo 3)
-(log bar)
+
+(a = false)
+
+(log (b c))
 ```
 
 Functions are now made:
