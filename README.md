@@ -43,13 +43,3 @@ Functions are now made:
 * `or`
 * `xor`
 * `log`
-
-Operators are now made:
-
-* <
-* \>
-* \+
-* \-
-* \*
-* /
-* ==
