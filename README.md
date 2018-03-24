@@ -5,8 +5,8 @@ Write your program in file `program.pls` and execute `node index.js`.
 ##### Supports variable declaration
 
 ```lisp
-foo = true
-bar = foo
+(foo = true)
+(bar = foo)
 ```
 
 Your program need to be writen in functional style. Example:
@@ -29,9 +29,12 @@ Your program need to be writen in functional style. Example:
 (log (b c))
 ```
 
-Functions are now made:
+#### Operators are now made:
 
-* `if`
+* if
+
+#### Functions are now made:
+
 * `plus`
 * `minus`
 * `multiplication`

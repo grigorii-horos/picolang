@@ -1,4 +1,4 @@
-(a = 1000)
+((a = 1000)
 
 (b = (if true
   (a true)
@@ -13,3 +13,4 @@
 (a = false)
 
 (log (b c))
+)

@@ -1,4 +1,3 @@
-console.clear();
 const util = require('util');
 const functions = require('./lib/functions');
 const tokenize = require('./lib/tokenize');
@@ -15,8 +14,8 @@ const tokens = tokenize(program);
 const tree = getTree(tokens);
 const AST = tree.map(node => getASTNode(node));
 
-console.log(' AST ------------------');
-console.log(AST);
+// console.log(' AST ------------------');
+// console.log(AST);
 
 const execASTNode = ({ AST, variables }) => {
   if (!Array.isArray(AST)) {
@@ -117,7 +116,7 @@ const execASTNode = ({ AST, variables }) => {
 
   return AST;
 };
-console.log(' EXEC RESULT ------------------');
+// console.log(' EXEC RESULT ------------------');
 
 const result = execASTNode({
   AST,
@@ -134,6 +133,4 @@ const result = execASTNode({
   },
 });
 
-console.log('RESULT ', result);
-
-setTimeout(console.log, 1000000);
+// console.log('RESULT ', result);
