@@ -1,7 +1,15 @@
-(foo = 3)
-log (if (foo == 3)
-  ("foo = 3")
-  ("Error")
-)
-bar = pow foo 3
-log bar
+(a = 1000)
+
+(b = (if true
+  (a true)
+  (a false)
+))
+
+(c => (if true
+  (a true)
+  (a false)
+))
+
+(a = false)
+
+(log (b c))

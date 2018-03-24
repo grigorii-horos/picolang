@@ -1,0 +1,20 @@
+{
+  "name": "picolang",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/horosgrisa/picolang",
+  "author": "Grigorii Horos <horosgrisa@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-async-await": "^0.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-unicorn": "^4.0.2"
+  }
+}

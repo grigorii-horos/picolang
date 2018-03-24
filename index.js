@@ -1,175 +1,139 @@
-const functions = require('./functions');
-const operators = require('./operators');
+console.clear();
+const util = require('util');
+const functions = require('./lib/functions');
+const tokenize = require('./lib/tokenize');
+const getTree = require('./lib/getTree');
+const getASTNode = require('./lib/getASTNode');
+const getValues = require('./lib/getValues');
 
-let program = require('fs')
+const program = require('fs')
   .readFileSync('./program.pls')
   .toString();
 
-const toTokens = string => {
-  const result = string
-    .split('"')
-    .map(function(x, i) {
-      if (i % 2 === 0) {
-        return x.replace(/\(/g, '').replace(/\)/g, '');
-      } else {
-        return x.replace(/ /g, '!whitespace!');
-      }
-    })
-    .join('"')
-    .trim()
-    .split(/\s+/)
-    .map(function(x) {
-      return x.replace(/!whitespace!/g, ' ');
-    });
-  return result;
-};
+const tokens = tokenize(program);
 
-const tokens = toTokens(program);
+const tree = getTree(tokens);
+const AST = tree.map(node => getASTNode(node));
 
-const toAST = tokens => {
-  return tokens.map(token => {
-    if (functions[token]) {
-      return {
-        type: 'CallExpresion',
-        value: functions[token]
-      };
-    }
-    if (operators[token]) {
-      return {
-        type: 'Operator',
-        value: operators[token]
-      };
-    }
-    if (!isNaN(parseFloat(token))) {
-      return {
-        type: 'Literal',
-        dataType: 'number',
-        value: +token
-      };
-    }
-    if (token === 'true' || token === 'TRUE') {
-      return {
-        type: 'Literal',
-        dataType: 'bool',
-        value: true
-      };
-    }
-    if (token === 'false' || token === 'FALSE') {
-      return {
-        type: 'Literal',
-        dataType: 'bool',
-        value: false
-      };
-    }
-    if (token[0] === '"' && token.slice(-1) === '"') {
-      return {
-        type: 'Literal',
-        value: token
-      };
-    }
-    if (token === '=') {
-      return {
-        type: 'Аssignment',
-        value: token
-      };
-    }
-    return {
-      type: 'Constant',
-      value: token
-    };
-  });
-};
+console.log(' AST ------------------');
+console.log(AST);
 
-const AST = toAST(tokens);
-// console.log(AST);
+const execASTNode = ({ AST, variables }) => {
+  if (!Array.isArray(AST)) {
+    if (variables[AST.value]) {
+      return execASTNode({
+        AST: variables[AST.value],
+        variables: { ...variables },
+      });
+    }
 
-const execASTPart = ({ AST, variables, results }) => {
-  // console.log('----', variables);
+    return AST;
+  }
+
   if (
-    (AST[0].type === 'Literal' || AST[0].type === 'Constant') &&
+    AST[0] && // !
     AST[1] &&
-    AST[1].type === 'Operator'
+    AST[0].type === 'Identifier' &&
+    AST[1].type === 'VariableAssignment'
   ) {
-    let localAST = AST;
-    let cache = localAST[0];
-    localAST[0] = localAST[1];
-    localAST[1] = cache;
-    const node = localAST.shift();
-    let result;
-    if (node.value) {
-      result = node.value;
-    }
-
-    while (typeof result === 'function') {
-      const executed = execASTPart({ AST: localAST, variables, results });
-      localAST = executed.AST;
-      result = result(executed.value);
-    }
     return {
-      value: result,
-      AST: localAST
+      type: 'VariableDefinition',
+      name: AST[0].value,
+      value: execASTNode({
+        AST: AST[2],
+        variables: { ...variables },
+      }),
     };
   }
 
-  if (AST[0].type === 'CallExpresion') {
-    let localAST = AST;
-    const node = localAST.shift();
-    let result;
-    if (node.value) {
-      result = node.value;
-    }
-
-    while (typeof result === 'function') {
-      const executed = execASTPart({ AST: localAST, variables, results });
-      localAST = executed.AST;
-      result = result(executed.value);
-    }
+  if (
+    AST[0] && // !
+    AST[1] &&
+    AST[0].type === 'Identifier' &&
+    AST[1].type === 'FunctionAssignment'
+  ) {
     return {
-      value: result,
-      AST: localAST
+      type: 'FunctionDefinition',
+      name: AST[0].value,
+      value: AST[2],
     };
   }
 
-  if (AST[0].type === 'Literal') {
-    const value = AST[0].value;
-    AST.shift();
-    return {
-      value,
-      AST
-    };
+  if (AST[0].value === 'if') {
+    if (
+      getValues(execASTNode({
+        AST: AST[1],
+        variables: { ...variables },
+      }))
+    ) {
+      return execASTNode({
+        AST: AST[2],
+        variables: { ...variables },
+      });
+    }
+    return execASTNode({
+      AST: AST[3],
+      variables: { ...variables },
+    });
   }
-  if (AST[0].type === 'Constant') {
-    const value = variables[AST[0].value];
-    AST.shift();
-    return {
-      value,
-      AST
-    };
+
+  AST = AST.map((ASTNode) => {
+    const executed = execASTNode({
+      AST: ASTNode,
+      variables: { ...variables },
+    });
+    if (executed.type === 'VariableDefinition') {
+      variables[executed.name] = execASTNode({
+        AST: executed.value,
+        variables: { ...variables },
+      });
+    }
+    if (executed.type === 'FunctionDefinition') {
+      variables[executed.name] = executed.value;
+    }
+    return executed;
+  });
+
+  if (typeof AST[0].value === 'function') {
+    let value;
+    value = AST.shift().value;
+    if (!AST[0]) {
+      value = value();
+    } else {
+      value = AST.reduce((fn, ASTNode) => {
+        if (typeof value === 'function') {
+          value = fn(getValues(execASTNode({
+            AST: ASTNode,
+            variables: { ...variables },
+          })));
+        }
+
+        return value;
+      }, value);
+    }
+    value;
+    return { type: 'Partial', value };
   }
+
+  return AST;
 };
+console.log(' EXEC RESULT ------------------');
 
-const execAST = AST => {
-  let constantNumber = 0;
-  let constantName = '';
-  let results = [];
-  let variables = {};
-  let localAST = [...AST];
-  while (localAST[0]) {
-    let assigment;
-    if (localAST[0].type === 'Constant' && localAST[1].type === 'Аssignment') {
-      constantName = localAST[0].value;
-      localAST.shift();
-      localAST.shift();
-      assigment = true;
-    }
-    result = execASTPart({ AST: localAST, results, variables });
-    localAST = result.AST;
-    results.push(result.value);
-    if (assigment) {
-      variables[constantName] = result.value;
-    }
-  }
-  return { results, variables };
-};
+const result = execASTNode({
+  AST,
+  variables: {
+    ...functions,
+    RANDOM: {
+      type: 'Literal',
+      value: Math.random(),
+    },
+    RANDOMFN: {
+      type: 'Native',
+      value: Math.random,
+    },
+  },
+});
 
-execAST(AST);
+console.log('RESULT ', result);
+
+setTimeout(console.log, 1000000);
