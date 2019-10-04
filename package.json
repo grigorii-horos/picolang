@@ -6,15 +6,28 @@
   "author": "Grigorii Horos <horosgrisa@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-async-await": "^0.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-json": "^1.2.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-async-await": "0.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-unicorn": "^4.0.2"
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.15.1",
+    "eslint-plugin-unicorn": "^12.0.2"
+  },
+  "devDependencies": {
+    "eslint-config-es": "^3.12.0",
+    "eslint-config-standard-jsdoc": "^9.1.1",
+    "eslint-plugin-dollar-sign": "^1.0.2",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-jquery": "^1.5.1",
+    "eslint-plugin-jsdoc": "^15.9.4",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.7.0"
   }
 }

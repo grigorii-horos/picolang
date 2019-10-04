@@ -12,7 +12,7 @@ const program = require('fs')
 const tokens = tokenize(program);
 
 const tree = getTree(tokens);
-const AST = tree.map(node => getASTNode(node));
+const AST = tree.map((node) => getASTNode(node));
 
 // console.log(' AST ------------------');
 // console.log(AST);
@@ -30,10 +30,10 @@ const execASTNode = ({ AST, variables }) => {
   }
 
   if (
-    AST[0] && // !
-    AST[1] &&
-    AST[0].type === 'Identifier' &&
-    AST[1].type === 'VariableAssignment'
+    AST[0] // !
+    && AST[1]
+    && AST[0].type === 'Identifier'
+    && AST[1].type === 'VariableAssignment'
   ) {
     return {
       type: 'VariableDefinition',
@@ -46,10 +46,10 @@ const execASTNode = ({ AST, variables }) => {
   }
 
   if (
-    AST[0] && // !
-    AST[1] &&
-    AST[0].type === 'Identifier' &&
-    AST[1].type === 'FunctionAssignment'
+    AST[0] // !
+    && AST[1]
+    && AST[0].type === 'Identifier'
+    && AST[1].type === 'FunctionAssignment'
   ) {
     return {
       type: 'FunctionDefinition',
